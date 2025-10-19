@@ -1,7 +1,5 @@
 # 🇯🇵 LexiAI - Asisten Belajar Bahasa Jepang Pribadi
 
-![LexiAI Banner](https://via.placeholder.com/800x200/FF6B6B/FFFFFF?text=LexiAI+-+Asisten+Belajar+Bahasa+Jepang+Pribadi)
-
 LexiAI adalah asisten tutor bahasa Jepang pribadi yang dirancang untuk membantu pengguna menguasai kosakata, tata bahasa, dan nuansa dalam konteks pembelajaran. Aplikasi ini didukung oleh **Gemini 2.5 Flash** dan **LangChain** untuk memberikan pengalaman belajar yang interaktif dan personal.
 
 ## ✨ Fitur Utama
@@ -27,22 +25,30 @@ LexiAI adalah asisten tutor bahasa Jepang pribadi yang dirancang untuk membantu 
 - Python 3.8 atau lebih tinggi
 - Google API Key untuk Gemini AI
 - Database SQLite (otomatis dibuat)
+- uv (package manager), bisa juga menggunakan pip
 
 ### Instalasi
 
 1. **Clone atau download project ini**
 ```bash
-git clone [repository-url]
+git clone https://github.com/Xedonedron/lexiai-japanese_assistant.git
 cd LexiAI
+```
+
+2. **Membuat Virtual Environment**
+```bash
+uv init
+uv venv
+source .venv/Scripts/activate
 ```
 
 2. **Install dependencies**
 ```bash
-pip install streamlit sqlite3 langchain google-generativeai faiss-cpu pymupdf pandas
+uv add -r requirements.txt
 ```
 
 3. **Setup Google API Key**
-   - Dapatkan API key dari [Google AI Studio](https://makersuite.google.com/app/apikey)
+   - Dapatkan API key dari [Google AI Studio](https://aistudio.google.com/app/api-keys)
    - Masukkan API key di sidebar aplikasi
 
 4. **Jalankan aplikasi**
