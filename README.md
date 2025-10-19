@@ -2,7 +2,7 @@
 
 LexiAI adalah asisten tutor bahasa Jepang pribadi yang dirancang untuk membantu pengguna menguasai kosakata, tata bahasa, dan nuansa dalam konteks pembelajaran. Aplikasi ini didukung oleh **Gemini 2.5 Flash** dan **LangChain** untuk memberikan pengalaman belajar yang interaktif dan personal.
 
-[![Watch the video](https://img.youtube.com/vi/pEchnHqGOcc/maxresdefault.jpg)](https://youtu.be/pEchnHqGOcc)
+[![Watch the video](landing_page.jpg)](https://youtu.be/pEchnHqGOcc)
 ### [Watch this video on YouTube](https://youtu.be/pEchnHqGOcc)
 
 ## ✨ Fitur Utama
