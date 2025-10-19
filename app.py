@@ -17,17 +17,9 @@ KOMPONEN UTAMA & FUNGSI SETUP:
      - 'vocabulary': Untuk menyimpan kamus utama atau data RAG (kata, arti, contoh).
      - 'memory': Untuk menyimpan kata-kata yang dipelajari pengguna.
 
-2. load_embeddings()
-   - Tujuan: Memuat model embedding 'intfloat/multilingual-e5-large'.
-   - Mekanisme: Model akan dimuat dari disk lokal jika file `config.json` ditemukan di path yang ditentukan (`LOCAL_MODEL_PATH`). Jika tidak, model akan diunduh.
-   Catatan:
-        - Model intfloat/multilingual-e5-large memiliki ukuran kurang lebih 2GB 
-
-3. load_vector_db()
+2. load_vector_db()
    - Tujuan: Memuat atau membuat Vector Database FAISS untuk keperluan RAG.
-   - Mekanisme: Mencoba memuat index dari jalur 'huggingface_faiss_index'. 
-     Jika gagal, akan membuat database FAISS kosong/dummy. Index kosong ini 
-     akan menyebabkan f_lookup_dictionary tidak berjalan optimal.
+   - Mekanisme: Mencoba memuat index dari folder 'extension'. Untuk load file index.faiss dan index.pkl.
 
 FUNGSI TOOLING (Digunakan oleh LLM untuk mengambil tindakan):
 -------------------------------------------------------------
@@ -53,9 +45,8 @@ Ketiga fungsi ini didaftarkan sebagai tools untuk LLM agar dapat merespons permi
 Penyempurnaan berikutnya:
     - Saat ini fungsi `f_memory_update` masih hanya ada mekanisme validasi untuk tidak memasukan kata duplikat
       namun belum ada validasi untuk melihat apakah query dari user sesuai dengan terjemahan atau tidak.
-    - Pemilihan model dari Huggingface digunakan karnea saat ini API saya sudah mencapai rate limit untuk melakukan embedding,
-      dan model dari Google yang digunakan pada sesi kelas tidak memberikan output yang baik.
-      Masih diperlukan eksperimen untuk memilih model dengan akurasi yang serupa namun dengan ukuran yang lebih ringan.
+    - Diperlukan eksperimen lebih lanjut untuk menentukan model dalam proses embedding.
+      Model yang digunakan saat ini adalah model `intfloat/multilingual-e5-large` dari Huggingface.
     - RAG belum bersifat dinamis karena menggunakan file PDF sebagai kamus, fungsi f_lookup_dictionary dapat dikembangkan
       dengan mengakses API dari website [Jisho](jisho.org).
     - Belum banyak penanganan error ketika fungsi ataupun fitur dari Agent jika mengalami kegagalan, hanya ada exception umum.
