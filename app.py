@@ -192,21 +192,18 @@ prompt_template = ChatPromptTemplate.from_messages([
 # 3. SETUP RAG (Vector DB) untuk f_lookup_dictionary
 # ----------------------------------------------------
 
-FAISS_FILE = "D:\Learn\LLM & AI Agent\Hacktiv8\Data Scientists\Project\source\code\merged\extension\index.faiss"
-DOCSTORE_FILE = "D:\Learn\LLM & AI Agent\Hacktiv8\Data Scientists\Project\source\code\merged\extension\index.pkl"
+FAISS_FILE = "extension\index.faiss"
+DOCSTORE_FILE = "extension\index.pkl"
 
 def load_vector_db():
     # Cek keberadaan file FAISS dan metadata
     if os.path.exists(FAISS_FILE) and os.path.exists(DOCSTORE_FILE):
-        st.info(f"Memuat FAISS index dari '{FAISS_FILE}'...")
         index = faiss.read_index(FAISS_FILE)
-        st.success("FAISS index berhasil dimuat.")
 
         # Load docstore
         with open(DOCSTORE_FILE, "rb") as f:
             docstore_dict = pickle.load(f)
         docstore = InMemoryDocstore(docstore_dict)
-        st.success("Docstore berhasil dimuat.")
 
         # Bungkus ke object LangChain FAISS agar kompatibel dengan API LangChain
         vector_db = FAISS(
@@ -239,7 +236,8 @@ def f_memory_update(word: str, meaning: str) -> str:
         conn.close()
         return f"Kata '{word}' sudah ada di database, tidak ditambahkan ulang."
         
-    c.execute('''
+    else:
+        c.execute('''
         INSERT INTO memory (kata, arti)
         VALUES (?, ?)
     ''', (word, meaning))
@@ -332,8 +330,9 @@ st.set_page_config(
     layout="wide"
 )
 
+url = "https://www.linkedin.com/in/nixon-hutahaean/"
 st.title("🇯🇵 LexiAI: Asisten Belajar Bahasa Jepang Pribadi")
-st.caption("Didukung oleh Gemini 2.5 Flash dan LangChain.")
+st.markdown("Dibuat oleh: [Nixon Daniel Hutahaean](%s)" % url)
 
 # Fungsi untuk menangani kosakata acak
 def handle_random_vocabulary():
@@ -377,56 +376,44 @@ with st.sidebar:
     with tab1:
         st.subheader("➕ Tambah Kosakata Baru")
         
-        # Inisialisasi session state untuk form jika belum ada
-        if 'word_input' not in st.session_state:
-            st.session_state.word_input = ""
-        if 'meaning_input' not in st.session_state:
-            st.session_state.meaning_input = ""
-        
-        def clear_form():
-            """Fungsi untuk mengosongkan form"""
-            st.session_state.word_input = ""
-            st.session_state.meaning_input = ""
-        
-        with st.form("add_vocab_form"):
+        # Gunakan form dengan key yang unik
+        with st.form("add_vocab_form", clear_on_submit=True):
             word_input = st.text_input(
                 "Kata (Bahasa Jepang):", 
-                placeholder="contoh: neko",
-                key="word_input"
+                placeholder="contoh: neko"
             )
             meaning_input = st.text_input(
                 "Arti (Bahasa Indonesia):", 
-                placeholder="contoh: kucing",
-                key="meaning_input"
+                placeholder="contoh: kucing"
             )
-            submit_button = st.form_submit_button(
-                "Tambahkan ke Kosakata",
-                on_click=clear_form  # Panggil fungsi clear_form saat tombol diklik
-            )
+            submit_button = st.form_submit_button("Tambahkan ke Kosakata")
             
             if submit_button:
                 if word_input and meaning_input:
                     result = add_vocabulary_manual(word_input, meaning_input)
                     st.success(result)
-                    # Tidak perlu memanggil clear_form lagi karena sudah di-handle oleh on_click
-                    st.rerun()
+                    # Tidak perlu st.rerun() karena clear_on_submit=True sudah menangani
                 else:
                     st.error("Harap isi kedua field terlebih dahulu!")
     
     with tab2:
         st.subheader("📖 Kosakata Saya")
-        recent_vocab = get_recent_vocabulary(15)
+        # Pastikan memanggil get_recent_vocabulary di setiap tab
+        recent_vocab_tab2 = get_recent_vocabulary(15)
         
-        if recent_vocab:
-            df = pd.DataFrame(recent_vocab, columns=["Kata", "Arti", "Tanggal Ditambahkan"])
+        if recent_vocab_tab2:
+            df = pd.DataFrame(recent_vocab_tab2, columns=["Kata", "Arti", "Tanggal Ditambahkan"])
             st.dataframe(df[["Kata", "Arti"]], use_container_width=True, hide_index=True)
         else:
             st.info("Belum ada kosakata yang disimpan.")
     
     with tab3:
         st.subheader("🗑️ Hapus Kosakata")
-        if recent_vocab:
-            words_to_delete = [f"{word} - {meaning}" for word, meaning, _ in recent_vocab]
+        # Pastikan memanggil get_recent_vocabulary di setiap tab
+        recent_vocab_tab3 = get_recent_vocabulary(15)
+        
+        if recent_vocab_tab3:
+            words_to_delete = [f"{word} - {meaning}" for word, meaning, _ in recent_vocab_tab3]
             selected_vocab = st.selectbox("Pilih kata untuk dihapus:", words_to_delete)
             
             if selected_vocab and st.button("Hapus Kata Terpilih", type="primary"):

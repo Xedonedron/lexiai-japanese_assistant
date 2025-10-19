@@ -44,7 +44,7 @@ source .venv/Scripts/activate
 
 2. **Install dependencies**
 ```bash
-uv add -r requirements.txt
+uv add -r requirements.txt --active
 ```
 
 3. **Setup Google API Key**
