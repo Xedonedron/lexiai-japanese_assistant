@@ -1,0 +1,10 @@
+streamlit
+google-genai
+langchain-google-genai
+google-ai-generativelanguage==0.6.15
+langchain-community
+langchain_core
+pypdf
+faiss-cpu
+PyMuPDF
+sentence-transformers
