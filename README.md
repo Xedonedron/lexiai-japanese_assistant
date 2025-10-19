@@ -8,7 +8,7 @@ LexiAI adalah asisten tutor bahasa Jepang pribadi yang dirancang untuk membantu 
 ## ✨ Fitur Utama
 
 ### 🎯 Pembelajaran Personal
-- **Manajemen Kosakata Pribadi**: Tambah, lihat, dan hapus kosakata dalam database pribadi Anda
+- **Manajemen Kosakata Pribadi**: Tambah, dan lihat kosakata dalam database pribadi Anda
 - **Progress Tracking**: Pantau perkembangan belajar dengan statistik kosakata yang dikuasai
 - **Kosakata Acak**: Tinjau ulang kosakata yang sudah dipelajari dengan fitur random
 
@@ -205,12 +205,11 @@ Jika Anda mengalami masalah atau memiliki saran:
 
 ## 🎯 Roadmap Fitur Mendatang
 
-- [ ] Sistem spaced repetition
-- [ ] Latihan kuis interaktif
-- [ ] Audio pronunciation
-- [ ] Multiple user support
-- [ ] Export/import data
-- [ ] Mobile app version
+ - [ ] Validasi kosakata: Menambahkan mekanisme untuk memeriksa apakah kata yang dimasukkan pengguna sesuai dengan terjemahan yang benar, bukan hanya mencegah duplikat.
+ - [ ] Optimasi model embedding: Mengeksplorasi model alternatif yang lebih ringan dan tetap akurat, karena saat ini model HuggingFace digunakan untuk menghindari rate limit API dan model Google kelas tidak optimal.
+ - [ ] RAG dinamis: Mengembangkan f_lookup_dictionary agar bisa mengakses sumber eksternal, misalnya API dari Jisho, sehingga kamus lebih up-to-date dan interaktif.
+ - [ ] Penanganan error: Menambahkan mekanisme error handling yang lebih spesifik untuk tool dan agent, agar kegagalan fungsi dapat diantisipasi dan dijelaskan dengan jelas kepada pengguna.
+ - [ ] Interaktivitas Streamlit: Memperbarui halaman agar lebih interaktif, termasuk menampilkan isi kamus di sidebar, menyediakan halaman khusus untuk menambahkan kosakata dengan form dan tombol, serta memperkaya feedback pengguna.
 
 ---
 
